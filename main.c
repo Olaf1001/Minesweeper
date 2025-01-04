@@ -2,11 +2,14 @@
 #include "include/board.h"
 #include "include/game.h"
 
-int main() {
+int main()
+{
 
     printf("Welcome to Minesweeper game!\n");
 
-    initializeBoard(5, 5);
+    Board boardGame;
+
+    initializeBoard(&boardGame, 10, 5);
 
     startGame();
 
