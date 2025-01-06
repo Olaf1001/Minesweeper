@@ -7,9 +7,28 @@ int main()
 
     printf("Welcome to Minesweeper game!\n");
 
-    Board boardGame;
+    Board gameBoard;
 
-    initializeBoard(&boardGame, 10, 5);
+    initializeBoard(&gameBoard, 10, 6);
+
+    placeMines(&gameBoard, 5);
+
+    calculateNeighboringMines(&gameBoard);
+
+    // Display Test Board
+
+    for(int i = 0; i < gameBoard.rows; i++) {
+        for(int j = 0; j < gameBoard.cols; j++) {
+            if(gameBoard.cells[i][j].isMine) {
+                printf("* ");
+            } else {
+                printf("%d ", gameBoard.cells[i][j].neighboringMines);
+            }
+        }
+        printf("\n");
+    }
+
+    freeBoard(&gameBoard);
 
     startGame();
 

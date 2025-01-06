@@ -20,4 +20,8 @@ void initializeBoard(Board *, int rows, int cols);
 
 void freeBoard(Board *);
 
+void placeMines(Board *board, int mineCount);
+
+void calculateNeighboringMines(Board *board);
+
 #endif
