@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "../include/board.h"
 
 void initializeBoard(Board *board, int rows, int cols)
@@ -25,7 +26,6 @@ void initializeBoard(Board *board, int rows, int cols)
         }
     }
 
-    printf("[^] board.c/board.h files works fine\n");
     printf("[^] Generated board with %d rows and %d columns\n", board->rows, board->cols);
 }
 
@@ -39,6 +39,8 @@ void freeBoard(Board *board)
 }
 
 void placeMines(Board *board, int mineCount) {
+    srand(time(NULL));
+    
     int placedMines = 0;
 
     while (placedMines < mineCount) {
