@@ -24,4 +24,8 @@ void placeMines(Board *board, int mineCount);
 
 void calculateNeighboringMines(Board *board);
 
+void flagCell(Board *board, int row, int col);
+
+void revealCell(Board *board, int row, int col);
+
 #endif
