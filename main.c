@@ -18,20 +18,7 @@ int main()
     int gameOver = 0;
     
     while(!gameOver) {
-        for (int i = 0; i < gameBoard.rows; i++) {
-            for (int j = 0; j < gameBoard.cols; j++) {
-                if (gameBoard.cells[i][j].isFlagged) {
-                    printf("F ");
-                } else if (!gameBoard.cells[i][j].isRevealed) {
-                    printf(". ");
-                } else if (gameBoard.cells[i][j].isMine) {
-                    printf("* ");
-                } else {
-                    printf("%d ", gameBoard.cells[i][j].neighboringMines);
-                }
-            }
-        printf("\n");
-        }
+        displayBoard(&gameBoard, gameOver);
 
         printf("Enter your command (f x y to flag Cell, r x y, to reveal Cell): ");
         char command;
@@ -42,7 +29,9 @@ int main()
         processUserInput(&gameBoard, command, row, col, &gameOver);
         
     }
-
+    
+    displayBoard(&gameBoard, gameOver);
+    
     freeBoard(&gameBoard);
 
     startGame();

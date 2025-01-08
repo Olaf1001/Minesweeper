@@ -144,4 +144,33 @@ void revealCell(Board *board, int row, int col, int * gameOver) {
     }
 }
 
+void displayBoard(Board* board, int gameOver) {
+    printf("   ");
+    for (int col = 0; col < board->cols; col++) {
+        printf("%2d ", col + 1);
+    }
+    printf("\n");
+
+    for (int row = 0; row < board->rows; row++) {
+        printf("%2d ", row + 1);
+        for (int col = 0; col < board->cols; col++) {
+            Cell* cell = &board->cells[row][col];
+
+            if (gameOver && cell->isMine) {
+                printf(" ✹ ");
+            } else if (cell->isFlagged) {
+                printf(" ⚑ ");
+            } else if (!cell->isRevealed) {
+                printf(" ■ ");
+            } else if (cell->neighboringMines > 0) {
+                printf(" %d ", cell->neighboringMines);
+            } else {
+                printf("   ");
+            }
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
 
