@@ -103,7 +103,7 @@ void flagCell(Board *board, int row, int col) {
     }
 }
 
-void revealCell(Board *board, int row, int col) {
+void revealCell(Board *board, int row, int col, int * gameOver) {
     if (row < 0 && col < 0 && row >= board->rows && col >= board->cols) {
         printf("[!] Wrong coordinates!\n");
         return;
@@ -122,7 +122,8 @@ void revealCell(Board *board, int row, int col) {
     board->cells[row][col].isRevealed = 1;
 
     if(board->cells[row][col].isMine) {
-        printf("[*] BOOM!!! You hit a mine at [%d][%d].\n", row, col);
+        printf("BOOM!!! You hit a mine at [%d][%d].\n", row, col);
+        *gameOver = 1;
         return;
     }
 
@@ -136,7 +137,7 @@ void revealCell(Board *board, int row, int col) {
 
                 if (neighborRow >= 0 && neighborRow < board->rows &&
                     neighborCol >= 0 && neighborCol < board->cols) {
-                    revealCell(board, neighborRow, neighborCol);
+                    revealCell(board, neighborRow, neighborCol, gameOver);
                 }
             }
         }

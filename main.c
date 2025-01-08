@@ -14,8 +14,10 @@ int main()
     placeMines(&gameBoard, 5);
 
     calculateNeighboringMines(&gameBoard);
+
+    int gameOver = 0;
     
-    while(1) {
+    while(!gameOver) {
         for (int i = 0; i < gameBoard.rows; i++) {
             for (int j = 0; j < gameBoard.cols; j++) {
                 if (gameBoard.cells[i][j].isFlagged) {
@@ -36,16 +38,9 @@ int main()
         int row, col;
 
         scanf(" %c %d %d", &command, &row, &col);
-        row--;
-        col--;
+
+        processUserInput(&gameBoard, command, row, col, &gameOver);
         
-        if(command == 'f') {
-            flagCell(&gameBoard, row, col);
-        } else if (command == 'r') {
-            revealCell(&gameBoard, row, col);
-        } else {
-            printf("[!] Unknown command, Try again. \n");
-        }
     }
 
     freeBoard(&gameBoard);
