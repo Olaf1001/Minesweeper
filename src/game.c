@@ -2,10 +2,6 @@
 #include "../include/board.h"
 #include "../include/game.h"
 
-void startGame(int rows, int cols) {
-        printf("[^] game.c/game.h files works fine\n");
-}
-
 int checkIfWin(Board* board) {
         for(int i = 0; i < board->rows; i++) {
                 for(int j = 0; j < board->cols; j++) {
@@ -19,10 +15,9 @@ int checkIfWin(Board* board) {
 
 void processUserInput(Board *board, char command, int row, int col, int *gameOver) {
         if(command == 'f') {
-            flagCell(board, row, col);
+                flagCell(board, row, col);
         } else if (command == 'r') {
-            revealCell(board, row, col, gameOver);
-
+                revealCell(board, row, col, gameOver);
                 if (*gameOver) {
                         printf("GAME OVER. You hit a mine. \n");
                 } else if(checkIfWin(board)) {
@@ -30,6 +25,10 @@ void processUserInput(Board *board, char command, int row, int col, int *gameOve
                         *gameOver = 1;
                 }
         } else {
-            printf("[!] Unknown command, Try again. \n");
+                printf("[!] Unknown command, Try again. \n");
         }
+}
+
+void startGame(int rows, int cols) {
+        printf("[^] game.c/game.h files works fine\n");
 }
