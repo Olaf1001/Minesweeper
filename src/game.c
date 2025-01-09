@@ -40,11 +40,12 @@ void clearScreen() {
 #endif
 }
 
-void selectLevel(int * boardLevel, int * boardRows, int * boardCols, int *boardMines) {
+void selectLevel(int * boardLevel, int * boardRows, int * boardCols, int * boardMines) {
     int userLevel;
 
     printf("Welcome to Minesweeper game!\n");
-    printf("Select game difficulty (1 - easy, 2 - medium, 3 - hard): ");
+    printf("Select game difficulty (1 - easy, 2 - medium, 3 - hard, 4 - custom): ");
+
     scanf("%d", &userLevel);
 
     FILE* boards;
@@ -60,8 +61,25 @@ void selectLevel(int * boardLevel, int * boardRows, int * boardCols, int *boardM
         if (*boardLevel == userLevel) {
             fscanf(boards, "%d %d %d", boardRows, boardCols, boardMines);
             printf("Level: %d, Rows: %d, Cols: %d, Mines: %d\n", *boardLevel, *boardRows, *boardCols, *boardMines);
-
         }
+    }
+
+    if(userLevel == 4) {
+            printf("x = ");
+            scanf("%d", boardRows);
+
+            printf("y = ");
+            scanf("%d", boardCols);
+
+            printf("mines = ");
+            scanf("%d", boardMines);
+
+            printf("Level: CUSTOM, Rows: %d, Cols: %d, Mines: %d\n", *boardRows, *boardCols, *boardMines);
+
+            if((*boardRows * *boardCols) < *boardMines) {
+                printf("[!] Numer of mines is greater than cells \n");
+                exit(1);
+            }
     }
 }
 
