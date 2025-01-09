@@ -4,30 +4,30 @@
 
 int main()
 {
-
-    printf("Welcome to Minesweeper game!\n");
-
     Board gameBoard;
 
-    initializeBoard(&gameBoard, 6, 6);
+    int boardLevel, boardRows, boardCols, boardMines;
 
-    placeMines(&gameBoard, 5);
+    selectLevel(&boardLevel, &boardRows, &boardCols, &boardMines);
+
+    initializeBoard(&gameBoard, boardRows, boardCols);
 
     calculateNeighboringMines(&gameBoard);
 
     int gameOver = 0;
     
     while(!gameOver) {
+        // clearScreen();
+
         displayBoard(&gameBoard, gameOver);
 
-        printf("Enter your command (f x y to flag Cell, r x y, to reveal Cell): ");
+        printf("Enter your command (f x y to flag Cell, r x y to reveal Cell): ");
         char command;
         int row, col;
 
         scanf(" %c %d %d", &command, &row, &col);
 
-        processUserInput(&gameBoard, command, row, col, &gameOver);
-        
+        processUserInput(&gameBoard, command, row, col, &gameOver, boardMines);
     }
     
     displayBoard(&gameBoard, gameOver);

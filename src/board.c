@@ -7,6 +7,7 @@ void initializeBoard(Board *board, int rows, int cols)
 {
     board->rows = rows;
     board->cols = cols;
+    board->firstMove = 0;
 
     board->cells = malloc(rows * sizeof(Cell *));
 
@@ -25,8 +26,6 @@ void initializeBoard(Board *board, int rows, int cols)
             board->cells[i][j].neighboringMines = 0;
         }
     }
-
-    printf("[^] Generated board with %d rows and %d columns\n", board->rows, board->cols);
 }
 
 void freeBoard(Board *board)
@@ -38,7 +37,7 @@ void freeBoard(Board *board)
     free(board->cells);
 }
 
-void placeMines(Board *board, int mineCount) {
+void placeMines(Board *board, int excludeRow, int excludeCol, int mineCount) {
     srand(time(NULL));
 
     int placedMines = 0;
@@ -46,6 +45,11 @@ void placeMines(Board *board, int mineCount) {
     while (placedMines < mineCount) {
         int row = rand() % board->rows;
         int col = rand() % board->cols;
+
+        if ((row >= excludeRow - 1 && row <= excludeRow + 1) &&
+            (col >= excludeCol - 1 && col <= excludeCol + 1)) {
+            continue;
+        }
 
         if(!board->cells[row][col].isMine) {
             board->cells[row][col].isMine = 1;
@@ -85,7 +89,7 @@ void calculateNeighboringMines(Board *board) {
 }
 
 void flagCell(Board *board, int row, int col) {
-    if (row < 0 && col < 0 && row >= board->rows && col >= board->cols) {
+    if (row < 0 || col < 0 || row >= board->rows || col >= board->cols) {
         printf("[!] Wrong coordinates!\n");
         return;
     }
@@ -98,15 +102,22 @@ void flagCell(Board *board, int row, int col) {
         } else {
             printf("Cell [%d][%d] is now flagged.\n", row, col);
         }
-    } else {
-        printf("Cell[%d][%d] is already revealed.\n", row, col);
-    }
+    } 
+    // else {
+    //     printf("Cell[%d][%d] is already revealed.\n", row, col);
+    // }
 }
 
-void revealCell(Board *board, int row, int col, int * gameOver) {
-    if (row < 0 && col < 0 && row >= board->rows && col >= board->cols) {
+void revealCell(Board *board, int row, int col, int * gameOver, int mineCount) {
+    if (row < 0 || col < 0 || row >= board->rows || col >= board->cols) {
         printf("[!] Wrong coordinates!\n");
         return;
+    }
+
+    if (board->firstMove == 0) {
+        placeMines(board, row, col, mineCount);
+        calculateNeighboringMines(board);
+        board->firstMove = 1;
     }
 
     if(board->cells[row][col].isFlagged) {
@@ -115,14 +126,14 @@ void revealCell(Board *board, int row, int col, int * gameOver) {
     }
 
     if(board->cells[row][col].isRevealed) {
-        printf("Cell [%d][%d] is already revealed.\n", row, col);
+        // printf("Cell [%d][%d] is already revealed.\n", row, col);
         return;
     }
 
     board->cells[row][col].isRevealed = 1;
 
     if(board->cells[row][col].isMine) {
-        printf("BOOM!!! You hit a mine at [%d][%d].\n", row, col);
+        printf("BOOM!!! You hit a mine at [%d][%d].\n", row + 1, col + 1);
         *gameOver = 1;
         return;
     }
@@ -137,7 +148,7 @@ void revealCell(Board *board, int row, int col, int * gameOver) {
 
                 if (neighborRow >= 0 && neighborRow < board->rows &&
                     neighborCol >= 0 && neighborCol < board->cols) {
-                    revealCell(board, neighborRow, neighborCol, gameOver);
+                    revealCell(board, neighborRow, neighborCol, gameOver, mineCount);
                 }
             }
         }
@@ -147,23 +158,43 @@ void revealCell(Board *board, int row, int col, int * gameOver) {
 void displayBoard(Board* board, int gameOver) {
     printf("   ");
     for (int col = 0; col < board->cols; col++) {
-        printf("%2d ", col + 1);
+        printf("\033[1m%2d \033[0m", col + 1);
     }
+
     printf("\n");
 
     for (int row = 0; row < board->rows; row++) {
-        printf("%2d ", row + 1);
+        printf("\033[1m%2d \033[0m", row + 1);
         for (int col = 0; col < board->cols; col++) {
             Cell* cell = &board->cells[row][col];
 
             if (gameOver && cell->isMine) {
                 printf(" ✹ ");
             } else if (cell->isFlagged) {
-                printf(" ⚑ ");
+                printf("\033[1;31m ⚑ \033[0m");
             } else if (!cell->isRevealed) {
                 printf(" ■ ");
             } else if (cell->neighboringMines > 0) {
-                printf(" %d ", cell->neighboringMines);
+                switch (cell->neighboringMines) {
+                    case 1:
+                        printf("\033[0;34m %d \033[0m", cell->neighboringMines);
+                        break;
+                    case 2:
+                        printf("\033[0;32m %d \033[0m", cell->neighboringMines);
+                        break;
+                    case 3:
+                        printf("\033[0;31m %d \033[0m", cell->neighboringMines);
+                        break;
+                    case 4:
+                        printf("\033[0;35m %d \033[0m", cell->neighboringMines);
+                        break;
+                    case 5:
+                        printf("\033[0;33m %d \033[0m", cell->neighboringMines);
+                        break;
+                    default:
+                        printf("\033[0;36m %d \033[0m", cell->neighboringMines);
+                        break;
+                }
             } else {
                 printf("   ");
             }
@@ -172,5 +203,3 @@ void displayBoard(Board* board, int gameOver) {
     }
     printf("\n");
 }
-
-
