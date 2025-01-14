@@ -74,12 +74,12 @@ void selectLevel(int * boardLevel, int * boardRows, int * boardCols, int * board
             printf("mines = ");
             scanf("%d", boardMines);
 
-            printf("Level: CUSTOM, Rows: %d, Cols: %d, Mines: %d\n", *boardRows, *boardCols, *boardMines);
-
             if((*boardRows * *boardCols) < *boardMines) {
-                printf("[!] Numer of mines is greater than cells \n");
-                exit(1);
+                printf("[!] Numer of mines is greater than cells.\nEnter new mine amount: ");
+                scanf("%d", boardMines);
             }
+            
+            printf("Level: CUSTOM, Rows: %d, Cols: %d, Mines: %d\n", *boardRows, *boardCols, *boardMines);
     }
 }
 

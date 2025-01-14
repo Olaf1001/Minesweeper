@@ -97,11 +97,11 @@ void flagCell(Board *board, int row, int col) {
     if(!board->cells[row][col].isRevealed) {
         board->cells[row][col].isFlagged = !board->cells[row][col].isFlagged;
 
-        if(!board->cells[row][col].isFlagged) {
-            printf("Cell [%d][%d] is now unflagged.\n", row, col);
-        } else {
-            printf("Cell [%d][%d] is now flagged.\n", row, col);
-        }
+        // if(!board->cells[row][col].isFlagged) {
+        //     printf("Cell [%d][%d] is now unflagged.\n", row, col);
+        // } else {
+        //     printf("Cell [%d][%d] is now flagged.\n", row, col);
+        // }
     } 
     // else {
     //     printf("Cell[%d][%d] is already revealed.\n", row, col);

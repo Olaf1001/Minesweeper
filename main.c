@@ -15,9 +15,9 @@ int main()
     calculateNeighboringMines(&gameBoard);
 
     int gameOver = 0;
+    // clearScreen();
     
     while(!gameOver) {
-        // clearScreen();
 
         displayBoard(&gameBoard, gameOver);
 
