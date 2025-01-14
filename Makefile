@@ -1,6 +1,6 @@
 PROGRAM = minesweeper
 
-SRC = main.c src/board.c src/game.c src/score.c
+SRC = main.c src/board.c src/game.c src/score.c src/file.c
 INCLUDE = -Iinclude
 
 CFLAGS = -Wall

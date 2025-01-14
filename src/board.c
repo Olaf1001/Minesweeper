@@ -108,7 +108,9 @@ void revealCell(Board *board, int row, int col, int * gameOver, int mineCount) {
     }
 
     if (board->firstMove == 0) {
-        placeMines(board, row, col, mineCount);
+        if(mineCount != 0) {
+            placeMines(board, row, col, mineCount);
+        }
         calculateNeighboringMines(board);
         board->firstMove = 1;
     }

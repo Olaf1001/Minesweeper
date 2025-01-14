@@ -27,29 +27,24 @@ void processUserInput(Board *board, char command, int row, int col, int *gameOve
                 revealCell(board, row, col, gameOver, mineCount);
                 if (*gameOver) {
                         displayBoard(board, *gameOver);
-                        printf("Please write your nickname for the scoreboard: ");
-                        scanf("%s", userName);
-                        fillScoreboard(userName, board->score);
+                        if(mineCount != 0) {
+                                printf("Please write your nickname for the scoreboard: ");
+                                scanf("%s", userName);
+                                fillScoreboard(userName, board->score);    
+                        }
                 } else if(checkIfWin(board)) {
                         printf("Congratulations! You won the game! \n");
                         *gameOver = 1;
                         displayBoard(board, *gameOver);
-                        printf("Please write your nickname for the scoreboard: ");
-                        scanf("%s", userName);
-                        fillScoreboard(userName, board->score);
-
+                        if(mineCount != 0) {
+                                printf("Please write your nickname for the scoreboard: ");
+                                scanf("%s", userName);
+                                fillScoreboard(userName, board->score);    
+                        }
                 }
         } else {
                 printf("[!] Unknown command, Try again. \n");
         }
-}
-
-void clearScreen() {
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
 }
 
 void selectLevel(int * boardLevel, int * boardRows, int * boardCols, int * boardMines) {
@@ -95,8 +90,4 @@ void selectLevel(int * boardLevel, int * boardRows, int * boardCols, int * board
 
             printf("Level: CUSTOM, Rows: %d, Cols: %d, Mines: %d\n", *boardRows, *boardCols, *boardMines);
     }
-}
-
-void startGame(int rows, int cols) {
-
 }

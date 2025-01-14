@@ -3,6 +3,7 @@
 #include "include/board.h"
 #include "include/game.h"
 #include "include/score.h"
+#include "include/file.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
     while ((opt = getopt(argc, argv, "f:s")) != -1) {
         switch (opt) {
             case 'f':
+                runFromFile(optarg);
                 return 0;
             case 's':
                 displayScoreboard();
@@ -32,7 +34,6 @@ int main(int argc, char *argv[])
     calculateNeighboringMines(&gameBoard);
 
     int gameOver = 0;
-    // clearScreen();
     
     while(!gameOver) {
 
@@ -52,8 +53,6 @@ int main(int argc, char *argv[])
     displayScoreboard();
 
     freeBoard(&gameBoard);
-
-    startGame();
 
     return 0;
 }

@@ -31,8 +31,7 @@ void flagCell(Board *board, int row, int col);
 
 void revealCell(Board *board, int row, int col, int * gameOver, int mineCount);
 
-void displayBoard(Board* board, int gameOver);
+void displayBoard(Board *board, int gameOver);
 
-void clearScreen();
 
 #endif
