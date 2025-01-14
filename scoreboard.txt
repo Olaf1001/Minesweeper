@@ -1,1 +1,6 @@
+test 35
+aaa 27
 pierwszy 16
+drugi 10
+aaaa 5
+trzeci 1

@@ -98,16 +98,7 @@ void flagCell(Board *board, int row, int col) {
 
     if(!board->cells[row][col].isRevealed) {
         board->cells[row][col].isFlagged = !board->cells[row][col].isFlagged;
-
-        // if(!board->cells[row][col].isFlagged) {
-        //     printf("Cell [%d][%d] is now unflagged.\n", row, col);
-        // } else {
-        //     printf("Cell [%d][%d] is now flagged.\n", row, col);
-        // }
     } 
-    // else {
-    //     printf("Cell[%d][%d] is already revealed.\n", row, col);
-    // }
 }
 
 void revealCell(Board *board, int row, int col, int * gameOver, int mineCount) {
@@ -128,18 +119,18 @@ void revealCell(Board *board, int row, int col, int * gameOver, int mineCount) {
     }
 
     if(board->cells[row][col].isRevealed) {
-        // printf("Cell [%d][%d] is already revealed.\n", row, col);
         return;
     }
 
     board->cells[row][col].isRevealed = 1;
-    board->score += 1 * board->level; // Score calculataion
 
     if(board->cells[row][col].isMine) {
         printf("BOOM!!! You hit a mine at [%d][%d].\n", row + 1, col + 1);
         *gameOver = 1;
         return;
     }
+
+    board->score += 1 * board->level; // Score calculataion
 
     if (board->cells[row][col].neighboringMines == 0) {
         for (int dr = -1; dr <= 1; dr++) {

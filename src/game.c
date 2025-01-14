@@ -26,13 +26,14 @@ void processUserInput(Board *board, char command, int row, int col, int *gameOve
         } else if (command == 'r') {
                 revealCell(board, row, col, gameOver, mineCount);
                 if (*gameOver) {
-                        printf("GAME OVER. You hit a mine. \n");
+                        displayBoard(board, *gameOver);
                         printf("Please write your nickname for the scoreboard: ");
                         scanf("%s", userName);
                         fillScoreboard(userName, board->score);
                 } else if(checkIfWin(board)) {
                         printf("Congratulations! You won the game! \n");
                         *gameOver = 1;
+                        displayBoard(board, *gameOver);
                         printf("Please write your nickname for the scoreboard: ");
                         scanf("%s", userName);
                         fillScoreboard(userName, board->score);

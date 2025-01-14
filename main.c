@@ -1,10 +1,26 @@
 #include <stdio.h>
+#include <unistd.h>
 #include "include/board.h"
 #include "include/game.h"
 #include "include/score.h"
 
-int main()
+int main(int argc, char *argv[])
 {
+    int opt;
+
+    while ((opt = getopt(argc, argv, "f:s")) != -1) {
+        switch (opt) {
+            case 'f':
+                return 0;
+            case 's':
+                displayScoreboard();
+                return 0;
+            default:
+                fprintf(stderr, "Usage: %s [-f <file>] [-s]\n", argv[0]);
+                return 1;
+        }
+    }
+
     Board gameBoard;
 
     int boardLevel, boardRows, boardCols, boardMines;
@@ -31,8 +47,7 @@ int main()
 
         processUserInput(&gameBoard, command, row, col, &gameOver, boardMines);
     }
-    
-    displayBoard(&gameBoard, gameOver);
+
 
     displayScoreboard();
 

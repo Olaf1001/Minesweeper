@@ -55,6 +55,8 @@ void displayScoreboard() {
     int score;
     int counter = 1;
 
+    printf("\nSCOREBOARD: \n\n");
+
     if (scoreboard != NULL) {
         while ((fscanf(scoreboard, "%s %d", name, &score) == 2) && counter <= 5 ) {
             printf("%d. %s %d\n", counter, name, score);
