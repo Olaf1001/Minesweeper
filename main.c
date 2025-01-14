@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "include/board.h"
 #include "include/game.h"
+#include "include/score.h"
 
 int main()
 {
@@ -10,7 +11,7 @@ int main()
 
     selectLevel(&boardLevel, &boardRows, &boardCols, &boardMines);
 
-    initializeBoard(&gameBoard, boardRows, boardCols);
+    initializeBoard(&gameBoard, boardRows, boardCols, boardLevel);
 
     calculateNeighboringMines(&gameBoard);
 
@@ -21,6 +22,7 @@ int main()
 
         displayBoard(&gameBoard, gameOver);
 
+        printf("SCORE: %d\n", gameBoard.score);
         printf("Enter your command (f x y to flag Cell, r x y to reveal Cell): ");
         char command;
         int row, col;
@@ -31,7 +33,9 @@ int main()
     }
     
     displayBoard(&gameBoard, gameOver);
-    
+
+    displayScoreboard();
+
     freeBoard(&gameBoard);
 
     startGame();

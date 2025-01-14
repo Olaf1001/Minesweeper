@@ -14,10 +14,12 @@ typedef struct
     int rows;
     int cols;
     int firstMove;
+    int level;
+    int score;
     Cell **cells;
 } Board;
 
-void initializeBoard(Board *, int rows, int cols);
+void initializeBoard(Board *board, int rows, int cols, int level);
 
 void freeBoard(Board *);
 

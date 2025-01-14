@@ -3,11 +3,13 @@
 #include <time.h>
 #include "../include/board.h"
 
-void initializeBoard(Board *board, int rows, int cols)
+void initializeBoard(Board *board, int rows, int cols, int level)
 {
     board->rows = rows;
     board->cols = cols;
     board->firstMove = 0;
+    board->level = level;
+    board->score = 0;
 
     board->cells = malloc(rows * sizeof(Cell *));
 
@@ -131,6 +133,7 @@ void revealCell(Board *board, int row, int col, int * gameOver, int mineCount) {
     }
 
     board->cells[row][col].isRevealed = 1;
+    board->score += 1 * board->level; // Score calculataion
 
     if(board->cells[row][col].isMine) {
         printf("BOOM!!! You hit a mine at [%d][%d].\n", row + 1, col + 1);
