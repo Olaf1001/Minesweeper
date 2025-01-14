@@ -1,7 +1,3 @@
-test 46
-test 35
-aaa 27
-pierwszy 16
-drugi 10
-aaaa 5
-trzeci 1
+Jan 1000
+Maja 451
+Kacper 133
