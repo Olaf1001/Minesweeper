@@ -165,7 +165,7 @@ void displayBoard(Board* board, int gameOver) {
             Cell* cell = &board->cells[row][col];
 
             if (gameOver && cell->isMine) {
-                printf(" ✹ ");
+                printf(" * ");
             } else if (cell->isFlagged) {
                 printf("\033[1;31m ⚑ \033[0m");
             } else if (!cell->isRevealed) {
